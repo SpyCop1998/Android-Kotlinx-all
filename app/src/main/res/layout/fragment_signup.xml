@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".view.loginFragment">
+    tools:context=".view.SignupFragment">
     <ProgressBar
         android:id="@+id/progressBar"
         android:visibility="gone"
@@ -33,17 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
         android:layout_margin="20dp"
-        android:id="@+id/loginBtn"
-        android:text="Login"
+        android:id="@+id/signUp"
+        android:text="Signup"
         />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginBtn"
-        android:id="@+id/singupbBtn"
-        android:text="Signup"
-        android:layout_margin="20dp"
-        />
 
 </RelativeLayout>

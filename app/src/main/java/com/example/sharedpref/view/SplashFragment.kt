@@ -25,7 +25,7 @@ class SplashFragment : Fragment() {
         val sharedPreferences: SharedPreferences =
             activity?.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)!!
         val sharedNameValue = sharedPreferences.getString("Key", "defaultname")
-        if (sharedNameValue == "") {
+        if (sharedNameValue == "Something") {
             val navController: NavController=NavHostFragment.findNavController(this)
             navController.navigate(R.id.action_splashFragment_to_homeFragment)
         } else {

@@ -1,5 +1,6 @@
 package com.example.sharedpref.view
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,27 +8,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import com.example.sharedpref.R
-import com.example.sharedpref.databinding.FragmentLoginBinding
+
+
+import com.example.sharedpref.databinding.FragmentSignupBinding
 import com.example.sharedpref.model.User
 import com.example.sharedpref.network.ApiHelperImpl
 import com.example.sharedpref.network.RetrofitBuilder
 import com.example.sharedpref.utils.Status
 import com.example.sharedpref.utils.ViewModelFactory
-import com.example.sharedpref.viewmodel.LoginFragmentViewModel
+import com.example.sharedpref.viewmodel.SignupFragmentViewModel
 
-class loginFragment : Fragment() {
-    lateinit var binding:FragmentLoginBinding
-    lateinit var viewModel: LoginFragmentViewModel
+class SignupFragment : Fragment() {
+    lateinit var binding: FragmentSignupBinding
+    lateinit var viewModel: SignupFragmentViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding= FragmentLoginBinding.inflate(layoutInflater)
+        binding = FragmentSignupBinding.inflate(layoutInflater)
+
         return binding.root
     }
 
@@ -35,31 +36,28 @@ class loginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModel()
         setupObserver()
-        val s: View.OnClickListener=Navigation.createNavigateOnClickListener(R.id.action_loginFragment_to_signupFragment)
-        binding.singupbBtn.setOnClickListener(s)
-
-
-        binding.loginBtn.setOnClickListener {
+        binding.signUp.setOnClickListener {
+            val userName = binding.userName.text
+            val password = binding.password.text
             val user = User(userName = "test", password = "test")
-            viewModel.login(user)
+            viewModel.signup(user)
         }
     }
 
-    private fun setUpViewModel(){
-        viewModel=ViewModelProviders.of(this,ViewModelFactory(ApiHelperImpl(RetrofitBuilder.apiService)))
-            .get(LoginFragmentViewModel::class.java)
+    private fun setUpViewModel() {
+        viewModel =
+            ViewModelProviders.of(this, ViewModelFactory(ApiHelperImpl(RetrofitBuilder.apiService)))
+                .get(SignupFragmentViewModel::class.java)
     }
 
     private fun setupObserver(){
-        viewModel.getLoginResponse().observe(viewLifecycleOwner,{
+        viewModel.getSignupResponse().observe(viewLifecycleOwner,{
             when(it.status){
                 Status.SUCCESS -> {
                     binding.progressBar.visibility=View.GONE
                     Log.d("Xmen from success", it.status.toString())
                     if(it.data?.response!!){
-//                        Toast.makeText(activity,"User Logged In Successfully", Toast.LENGTH_SHORT).show()
-                        val navController: NavController = NavHostFragment.findNavController(this)
-                        navController.navigate(R.id.action_loginFragment_to_homeFragment)
+                        Toast.makeText(activity,"User Added Successfully",Toast.LENGTH_SHORT).show()
                     }
                 }
                 Status.ERROR -> {

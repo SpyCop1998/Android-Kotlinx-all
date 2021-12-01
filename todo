@@ -1,0 +1,10 @@
+make node server
+use glid for images
+ features
+ recycler view list
+ profile
+ login
+ signup
+ normal animation
+
+ use - co-routines,retrofit, navigation, mvvm arch, databinding
