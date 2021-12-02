@@ -6,14 +6,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
+import com.example.sharedpref.R
 import com.example.sharedpref.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,5 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+//        val finalHost = NavHostFragment.create(R.navigation.nav_graph)
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.nav_host,finalHost)
+//            .setPrimaryNavigationFragment(finalHost)
+//            .commit()
     }
 }

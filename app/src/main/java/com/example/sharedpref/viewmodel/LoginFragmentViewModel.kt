@@ -18,7 +18,7 @@ class LoginFragmentViewModel(private val apiHelper: ApiHelper): ViewModel() {
         viewModelScope.launch {
             apiResponse.postValue(Resource.loading(null))
             try {
-                val response=apiHelper.signupUser(user)
+                val response=apiHelper.loginUser(user)
                 apiResponse.postValue(Resource.success(response))
             }catch (e: Exception){
                 apiResponse.postValue(Resource.loading(null))

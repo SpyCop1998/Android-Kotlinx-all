@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.sharedpref.R
+import com.example.sharedpref.viewmodel.SplashFragmentViewModel
 
 class SplashFragment : Fragment() {
     private val sharedPrefFile = "kotlinsharedpreference"
+    lateinit var viewModel: SplashFragmentViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,6 +28,9 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val sharedPreferences: SharedPreferences =
             activity?.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)!!
+
+
+
         val sharedNameValue = sharedPreferences.getString("Key", "defaultname")
         if (sharedNameValue == "Something") {
             val navController: NavController=NavHostFragment.findNavController(this)
@@ -33,4 +40,8 @@ class SplashFragment : Fragment() {
             navController.navigate(R.id.action_splashFragment_to_loginFragment)
         }
     }
+
+//    private fun setUpViewModel() {
+//        viewModel= ViewModelProviders.of(this).get(SplashFragmentViewModel::class.java)
+//    }
 }
