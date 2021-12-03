@@ -1,5 +1,4 @@
 package com.example.sharedpref.view
-
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,10 +20,10 @@ import com.example.sharedpref.network.RetrofitBuilder
 import com.example.sharedpref.utils.Status
 import com.example.sharedpref.utils.ViewModelFactory
 import com.example.sharedpref.viewmodel.LoginFragmentViewModel
-
 class loginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
     lateinit var viewModel: LoginFragmentViewModel
+    lateinit var navController: NavController
     var isLoginSuccessfull: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +35,22 @@ class loginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController=Navigation.findNavController(view)
         setUpViewModel()
         setupObserver()
-        val s: View.OnClickListener =
-            Navigation.createNavigateOnClickListener(R.id.action_loginFragment_to_signupFragment)
-        binding.singupbBtn.setOnClickListener(s)
+        binding.singupbBtn.setOnClickListener{
+            navController.navigate(R.id.action_loginFragment_to_signupFragment)
+        }
+
         binding.loginBtn.setOnClickListener {
-            val user = User(userName = "test", password = "test")
-            viewModel.login(user)
+            val userName:String=binding.userName.text.toString()
+            val password:String=binding.password.text.toString()
+            if(userName.isNotEmpty() && password.isNotEmpty()) {
+                val user = User(userName = userName, password = password)
+                viewModel.login(user)
+            }else{
+                Toast.makeText(activity,"Empty Fields", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -62,7 +69,7 @@ class loginFragment : Fragment() {
                     if (it.data?.response!!) {
                         isLoginSuccessfull=true
                         Toast.makeText(activity,"User Logged In Successfully", Toast.LENGTH_SHORT).show()
-                        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+                        navController.navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                 }
                 Status.ERROR -> {

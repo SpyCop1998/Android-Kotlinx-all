@@ -37,9 +37,9 @@ class SignupFragment : Fragment() {
         setUpViewModel()
         setupObserver()
         binding.signUp.setOnClickListener {
-            val userName = binding.userName.text
-            val password = binding.password.text
-            val user = User(userName = "test", password = "test")
+            val userName = binding.userName.text.toString()
+            val password = binding.password.text.toString()
+            val user = User(userName = userName, password = password)
             viewModel.signup(user)
         }
     }
